@@ -1,4 +1,5 @@
 import numpy as np
+import math as mt
 import matplotlib.pyplot as plt
 from gp import GaussianProcess as GP
 
@@ -6,7 +7,7 @@ from gp import GaussianProcess as GP
 f = lambda x,y: np.sin(np.sqrt(x ** 2 + y ** 2))
 
 # Initializer - Declare Size of x (1 Here) and of y (1 Here)
-fitter = GP(2)
+fitter = GP(2, mt.inf)
 
 # Sample From 3D Function
 dom_x_ = np.arange(-5, 5, 1)
@@ -46,7 +47,7 @@ plt.grid()
 zd = np.empty((xx.shape[0], xx.shape[1], 2))
 for idx_x in range(dom_x.shape[0]):
   for idx_y in range(dom_y.shape[0]):
-      zd[idx_x, idx_y, :] = (fitter.posterior_dxmean(np.array([dom_x[idx_x], dom_y[idx_y]]))).reshape((2,))
+      zd[idx_x, idx_y, :] = (fitter.posterior_dmean(np.array([dom_x[idx_x], dom_y[idx_y]]))).reshape((2,))
 
 fig = plt.figure()
 ax = plt.axes(projection='3d')

@@ -1,4 +1,5 @@
 import numpy as np
+import math as mt
 import matplotlib.pyplot as plt
 from gp import GaussianProcess as GP
 
@@ -7,7 +8,7 @@ f = lambda x: np.sin(x)
 fd = lambda x: np.cos(x)
 
 # Initializer - Declare Size of x (1 Here) and of y (1 Here)
-fitter = GP(1)
+fitter = GP(1, mt.inf)
 
 # Add Samples
 x = np.arange(0, 4, 1)
@@ -44,7 +45,7 @@ plt.legend()
 # Get Derivative
 yd = np.empty(dom.shape)
 for idx in range(dom.shape[0]):
-  yd[idx] = fitter.posterior_dxmean(dom[idx])
+  yd[idx] = fitter.posterior_dmean(dom[idx])
 
 fig = plt.figure()
 plt.plot(dom, yd, label='Gaussian Process Derivative')
